@@ -13,8 +13,8 @@ use bytes;
 
 my %defaults = (
     host_production => 'feedback.push.apple.com',
-    host_sandbox => 'feedback.sandbox.push.apple.com',
-    port => 2196,
+    host_sandbox    => 'feedback.sandbox.push.apple.com',
+    port            => 2196,
    );
 
 =head1 NAME
@@ -25,13 +25,11 @@ Net::APNS::Feedback - Retrieve data from Apple's APNS feedback service
 
   use Net::APNS::Feedback;
   
-  my $devicetoken_hex = '04ef31c862...0ea878416';
-
   my $apns = Net::APNS::Feedback->new({
     sandbox => 1,
-    cert => 'cert.pem',
-    key => 'key.pem',
-    passwd => 'key password',
+    cert    => 'cert.pem',
+    key     => 'key.pem',
+    passwd  => 'key password',
   });
   
   my @feedback = $apns->retrieve_feedback;
@@ -42,7 +40,7 @@ Apple's APNS system provides a feedback service to let you know the
 device rejected notifications because they are no longer wanted
 (usually meaning the app has been removed).
 
-See L<http://developer.apple.com/IPhone/library/documentation/NetworkingInternet/Conceptual/RemoteNotificationsPG/Introduction/Introduction.html|Apple Push Notification Service Programming Guide>.
+See L<Apple Push Notification Service Programming Guide|http://developer.apple.com/IPhone/library/documentation/NetworkingInternet/Conceptual/RemoteNotificationsPG/Introduction/Introduction.html>
 
 =head1 METHODS
 
@@ -84,10 +82,6 @@ on the setting of sandbox. can be set manually.
 =item port
 
 defaults to 2196
-
-=item command
-
-defaults to 0
 
 =back
 
@@ -136,7 +130,7 @@ checked the feedback service.
 Note that once you have drained all the feedback, you will not be delivered the
 same set again.
 
-See L<http://developer.apple.com/IPhone/library/documentation/NetworkingInternet/Conceptual/RemoteNotificationsPG/Introduction/Introduction.html|Apple Push Notification Service Programming Guide>.
+See L<Apple Push Notification Service Programming Guide|http://developer.apple.com/IPhone/library/documentation/NetworkingInternet/Conceptual/RemoteNotificationsPG/Introduction/Introduction.html>.
 
 =cut
 
@@ -169,17 +163,17 @@ isn't necessary as this will happen implicitly when the object is destroyed.
 
 =over 4
 
-=item L<http://developer.apple.com/IPhone/library/documentation/NetworkingInternet/Conceptual/RemoteNotificationsPG/Introduction/Introduction.html|Apple Push Notification Service Programming Guide>
+=item L<Apple Push Notification Service Programming Guide|http://developer.apple.com/IPhone/library/documentation/NetworkingInternet/Conceptual/RemoteNotificationsPG/Introduction/Introduction.html>
 
 =item L<Net::APNS::Persistent>
 
-=item L<http://github.com/aufflick/p5-net-apns-persistent|GIT Source Repository for this module>
+=item L<GIT Source Repository for this module|http://github.com/aufflick/p5-net-apns-persistent>
 
 =back
 
 =head1 AUTHOR
 
-Mark Aufflick, E<lt>aufflick@localE<gt>
+Mark Aufflick, E<lt>mark@aufflick.com<gt>
 
 =head1 COPYRIGHT AND LICENSE
 

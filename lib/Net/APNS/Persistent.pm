@@ -24,11 +24,11 @@ __PACKAGE__->mk_accessors(qw(
                            ));
 
 my %defaults = (
-    host_production => 'gateway.push.apple.com',
-    host_sandbox => 'gateway.sandbox.push.apple.com',
+    host_production  => 'gateway.push.apple.com',
+    host_sandbox     => 'gateway.sandbox.push.apple.com',
     max_payload_size => 256,
-    port => 2195,
-    command => 0
+    port             => 2195,
+    command          => 0
    );
 
 =head1 NAME
@@ -40,11 +40,12 @@ Net::APNS::Persistent - Send Apple APNS notifications over a persistent connecti
   use Net::APNS::Persistent;
 
   my $devicetoken_hex = '04ef...a878416';
+  
   my $apns = Net::APNS::Persistent->new({
     sandbox => 1,
-    cert => 'cert.pem',
-    key => 'key.pem',
-    passwd => 'key password',
+    cert    => 'cert.pem',
+    key     => 'key.pem',
+    passwd  => 'key password',
   });
 
   $apns->queue_notification(
@@ -73,7 +74,7 @@ ad nauseum). The call to disconnect is not strictly necessary since the object
 will disconnect as soon as it falls out of scope.
 
 You can place your own custom data outside the C<aps> hash. See the
-L<http://developer.apple.com/IPhone/library/documentation/NetworkingInternet/Conceptual/RemoteNotificationsPG/Introduction/Introduction.html|Apple Push Notification Service Programming Guide>
+L<Apple Push Notification Service Programming Guide|http://developer.apple.com/IPhone/library/documentation/NetworkingInternet/Conceptual/RemoteNotificationsPG/Introduction/Introduction.html>
 for more info.
 
 All methods are fatal on error. Eg. if the ssl connection returns an error,
@@ -249,7 +250,9 @@ a hashref with the payload. eg:
 The second example shows the complex alert format and also custom application
 data outside the aps hash.
 
-This method will ensure that the payload is at most 256 bytes.
+This method will ensure that the payload is at most 256 bytes by trimming the
+alert body. The trimming function is utf8-safe, but not very efficient (so
+don't ask it to trim War and Peace).
 
 =cut
 
@@ -295,17 +298,17 @@ isn't necessary as this will happen implicitly when the object is destroyed.
 
 =over 4
 
-=item L<http://developer.apple.com/IPhone/library/documentation/NetworkingInternet/Conceptual/RemoteNotificationsPG/Introduction/Introduction.html|Apple Push Notification Service Programming Guide>
+=item L<Apple Push Notification Service Programming Guide>|http://developer.apple.com/IPhone/library/documentation/NetworkingInternet/Conceptual/RemoteNotificationsPG/Introduction/Introduction.html>
 
 =item L<Net::APNS>
 
-=item L<http://github.com/aufflick/p5-net-apns-persistent|GIT Source Repository for this module>
+=item L<GIT Source Repository for this module|http://github.com/aufflick/p5-net-apns-persistent>
 
 =back
 
 =head1 AUTHOR
 
-Mark Aufflick, E<lt>aufflick@localE<gt>
+Mark Aufflick, E<lt>mark@aufflick.com<gt>
 
 =head1 CREDITS
 
