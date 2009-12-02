@@ -298,7 +298,7 @@ isn't necessary as this will happen implicitly when the object is destroyed.
 
 =over 4
 
-=item L<Apple Push Notification Service Programming Guide>|http://developer.apple.com/IPhone/library/documentation/NetworkingInternet/Conceptual/RemoteNotificationsPG/Introduction/Introduction.html>
+=item L<Apple Push Notification Service Programming Guide|http://developer.apple.com/IPhone/library/documentation/NetworkingInternet/Conceptual/RemoteNotificationsPG/Introduction/Introduction.html>
 
 =item L<Net::APNS>
 
