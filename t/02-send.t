@@ -17,7 +17,7 @@ SKIP: {
         key => $ENV{APNS_TEST_KEY},
        );
 
-    $args{passwd} = $ENV{APNS_TEST_KEY_PASSED}
+    $args{passwd} = $ENV{APNS_TEST_KEY_PASSWD}
       if $ENV{APNS_TEST_KEY_PASSWD};
     
     isa_ok(
