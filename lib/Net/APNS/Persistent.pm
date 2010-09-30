@@ -5,7 +5,7 @@ use 5.008;
 use strict;
 use warnings;
 
-our $VERSION = '0.01';
+our $VERSION = '0.03';
 
 use base 'Net::APNS::Persistent::Base';
 
@@ -73,9 +73,8 @@ You can also use the connection many times (ie. queue then send, queue then send
 ad nauseum). The call to disconnect is not strictly necessary since the object
 will disconnect as soon as it falls out of scope.
 
-You can place your own custom data outside the C<aps> hash. See the
-L<Apple Push Notification Service Programming Guide|http://developer.apple.com/IPhone/library/documentation/NetworkingInternet/Conceptual/RemoteNotificationsPG/Introduction/Introduction.html>
-for more info.
+You can place your own custom data outside the C<aps> hash. L<See the|SEE ALSO>
+Apple Push Notification Service Programming Guide for more info.
 
 All methods are fatal on error. Eg. if the ssl connection returns an error,
 the code will die. You can either then just restart your script or you can use
@@ -171,6 +170,15 @@ sub _apply_to_alert_body {
     }
 }
 
+sub _alert_body {
+    my ($payload) = @_;
+
+    return $payload->{aps}{alert}{body}
+        if ref $payload->{aps}{alert} eq 'HASH';
+
+    return $payload->{aps}{alert};
+}
+
 sub _pack_payload_for_devicetoken {
     my ($self, $devicetoken, $payload) = @_;
 
@@ -200,6 +208,11 @@ sub _pack_payload_for_devicetoken {
         # but users shouldn't be passing in huge strings, surely...
         
         while (bytes::length($json) > $max_payload_size) {
+
+            if (!_alert_body($payload)) {
+                die "Cannot bring payload under $max_payload_size bytes by truncating alert string";
+            }
+            
             _apply_to_alert_body($payload, sub {
                                      substr($_[0], 0, -1);
                                  });
@@ -209,7 +222,7 @@ sub _pack_payload_for_devicetoken {
     }
 
     return pack(
-        'c n/a n/a',
+        'c n/a* n/a*',
         $self->command,
         pack( 'H*', $devicetoken ),
         $json
@@ -298,17 +311,25 @@ isn't necessary as this will happen implicitly when the object is destroyed.
 
 =over 4
 
-=item L<Apple Push Notification Service Programming Guide|http://developer.apple.com/IPhone/library/documentation/NetworkingInternet/Conceptual/RemoteNotificationsPG/Introduction/Introduction.html>
+=item Presentation on this module by Author
 
-=item L<Net::APNS>
+L<http://mark.aufflick.com/talks/apns>
 
-=item L<GIT Source Repository for this module|http://github.com/aufflick/p5-net-apns-persistent>
+=item Apple Push Notification Service Programming Guide
+
+L<http://developer.apple.com/IPhone/library/documentation/NetworkingInternet/Conceptual/RemoteNotificationsPG/Introduction/Introduction.html>
+
+=item L<Net::APNS::Feedback>
+
+=item GIT Source Repository for this module
+
+L<http://github.com/aufflick/p5-net-apns-persistent>
 
 =back
 
 =head1 AUTHOR
 
-Mark Aufflick, E<lt>mark@aufflick.com<gt>
+Mark Aufflick, E<lt>mark@aufflick.comE<gt>, L<http://mark.aufflick.com/>
 
 =head1 CREDITS
 

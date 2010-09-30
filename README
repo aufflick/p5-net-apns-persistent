@@ -1,4 +1,4 @@
-Net-APNS-Persistent version 0.01
+Net-APNS-Persistent version 0.03
 ================================
 
 Net::APNS::Persistent - Send Apple APNS notifications over a persistent connection

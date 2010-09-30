@@ -1,5 +1,13 @@
 Revision history for Perl extension Net::APNS::Persistent and Net::APNS::Feedback.
 
+0.03  Thur Sep 30 2010
+    - Raises exception on send (instead of infinite loop) if packet is oversize due
+      to custom payload content
+
+0.02  Mon Dec 07 2009
+    - Fixes rt #52517
+      Some versions of perl 5.8 mandate a* after / in pack()
+
 0.01  Sun Nov 29 15:17:29 2009
 	- First version of both modules
 

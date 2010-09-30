@@ -4,7 +4,7 @@ use 5.008;
 use strict;
 use warnings;
 
-our $VERSION = '0.01';
+our $VERSION = '0.03';
 
 use base 'Net::APNS::Persistent::Base';
 
@@ -42,7 +42,7 @@ Apple's APNS system provides a feedback service to let you know the
 device rejected notifications because they are no longer wanted
 (usually meaning the app has been removed).
 
-See L<Apple Push Notification Service Programming Guide|http://developer.apple.com/IPhone/library/documentation/NetworkingInternet/Conceptual/RemoteNotificationsPG/Introduction/Introduction.html>
+L<See the|SEE ALSO> Apple Push Notification Service Programming Guide.
 
 =head1 METHODS
 
@@ -132,7 +132,7 @@ checked the feedback service.
 Note that once you have drained all the feedback, you will not be delivered the
 same set again.
 
-See L<Apple Push Notification Service Programming Guide|http://developer.apple.com/IPhone/library/documentation/NetworkingInternet/Conceptual/RemoteNotificationsPG/Introduction/Introduction.html>.
+L<See the|SEE ALSO> Apple Push Notification Service Programming Guide.
 
 =cut
 
@@ -165,17 +165,25 @@ isn't necessary as this will happen implicitly when the object is destroyed.
 
 =over 4
 
-=item L<Apple Push Notification Service Programming Guide|http://developer.apple.com/IPhone/library/documentation/NetworkingInternet/Conceptual/RemoteNotificationsPG/Introduction/Introduction.html>
+=item Presentation on this module by Author
+
+L<http://mark.aufflick.com/talks/apns>
+
+=item Apple Push Notification Service Programming Guide
+
+L<http://developer.apple.com/IPhone/library/documentation/NetworkingInternet/Conceptual/RemoteNotificationsPG/Introduction/Introduction.html>
 
 =item L<Net::APNS::Persistent>
 
-=item L<GIT Source Repository for this module|http://github.com/aufflick/p5-net-apns-persistent>
+=item GIT Source Repository for this module
+
+L<http://github.com/aufflick/p5-net-apns-persistent>
 
 =back
 
 =head1 AUTHOR
 
-Mark Aufflick, E<lt>mark@aufflick.com<gt>
+Mark Aufflick, E<lt>mark@aufflick.comE<gt>, L<http://mark.aufflick.com/>
 
 =head1 COPYRIGHT AND LICENSE
 

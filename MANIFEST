@@ -13,4 +13,5 @@ t/02-send.t
 t/03-send-large.t
 t/04-send-utf8.t
 t/05-recieve-feedback.t
+t/06-oversize-payload.t
 t/utf8-Demosthenes.txt
