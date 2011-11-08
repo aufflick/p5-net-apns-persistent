@@ -1,4 +1,4 @@
-use Test::More tests => 9;
+use Test::More tests => 12;
 use Test::Exception;
 
 BEGIN { use_ok('Net::APNS::Persistent') };
@@ -86,6 +86,29 @@ SKIP: {
                 foo => 'bar',
             },
            ) } "queued single notification with only one button and custom data";
+
+    lives_ok { $apns->send_queue } "sent";
+
+    lives_ok { $apns->disconnect } "disconnected";
+
+    sleep 3;
+
+        lives_ok {
+        $apns->queue_notification(
+            $ENV{APNS_TEST_DEVICETOKEN},
+            {
+                aps => {
+                    alert => {
+                        'loc-key'  => 'LOCALIZE_KEY',
+                        'loc-args' => ['foo bar', 'baz'],
+                        'action-loc-key' => undef,
+                    },
+                    sound => 'default',
+                    badge => 1,
+                },
+                foo => 'bar',
+            },
+           ) } "queued single notification using loc-key and loc-args with only one button and custom data";
 
     lives_ok { $apns->send_queue } "sent";
 

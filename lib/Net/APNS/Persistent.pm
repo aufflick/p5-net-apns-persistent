@@ -164,7 +164,12 @@ sub _apply_to_alert_body {
     
     # can be in alert->body, or a plain string in alert
     if (ref $payload->{aps}{alert} eq 'HASH') {
-        $payload->{aps}{alert}{body} = $func->($payload->{aps}{alert}{body});
+        if (my $body = $payload->{aps}{alert}{body}) {
+            $payload->{aps}{alert}{body} = $func->($body);
+        }
+        if (my $loc_args = $payload->{aps}{alert}{'loc-args'}) {
+            $_ = $func->($_) for @$loc_args;
+        }
     } else {
         $payload->{aps}{alert} = $func->($payload->{aps}{alert});
     }
