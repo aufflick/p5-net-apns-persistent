@@ -8,7 +8,7 @@ SKIP: {
         # make sure cpan installers see this
         my $msg = "skipping - can't make connection without environment variables: APNS_TEST_DEVICETOKEN APNS_TEST_CERT, APNS_TEST_KEY and (if needed) APNS_TEST_KEY_PASSWD";
         diag $msg;
-        skip $msg, 8;
+        skip $msg, 10;
     }
 
     my %args = (
