@@ -1,4 +1,4 @@
-use Test::More tests => 9;
+use Test::More tests => 11;
 use Test::Exception;
 
 BEGIN { use_ok('Net::APNS::Persistent') };
@@ -8,7 +8,7 @@ SKIP: {
         # make sure cpan installers see this
         my $msg = "skipping - can't make connection without environment variables: APNS_TEST_DEVICETOKEN APNS_TEST_CERT, APNS_TEST_KEY and (if needed) APNS_TEST_KEY_PASSWD";
         diag $msg;
-        skip $msg, 8;
+        skip $msg, 10;
     }
 
     my %args = (
@@ -59,9 +59,45 @@ O frabjous day! Callooh! Callay!'
            ) } "queued single large notification";
 
     lives_ok { $apns->send_queue } "sent";
-
+    
     sleep 3;
+    
+    lives_ok {
+        $apns->queue_notification(
+            $ENV{APNS_TEST_DEVICETOKEN},
+            {
+                aps => {
+                    alert => {
+                        body => "03-send-large.t alert.body
+Beware the Jubjub bird, and shun
+  The frumious Bandersnatch!'
+He took his vorpal sword in hand:
+  Long time the manxome foe he sought --
+So rested he by the Tumtum tree,
+  And stood awhile in thought.
+And, as in uffish thought he stood,
+  The Jabberwock, with eyes of flame,
+Came whiffling through the tulgey wood,
+  And burbled as it came!
+One, two! One, two! And through and through
+  The vorpal blade went snicker-snack!
+He left it dead, and with its head
+  He went galumphing back.
+'And, has thou slain the Jabberwock?
+  Come to my arms, my beamish boy!
+O frabjous day! Callooh! Callay!'
+  He chortled in his joy.",
+                    },
+                    sound => 'default',
+                    badge => 1,
+                },
+            },
+           ) } "queued single large notification (alert.body)";
 
+    lives_ok { $apns->send_queue } "sent";
+    
+    sleep 3;
+    
     lives_ok {
         $apns->queue_notification(
             $ENV{APNS_TEST_DEVICETOKEN},

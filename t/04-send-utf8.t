@@ -1,4 +1,4 @@
-use Test::More tests => 7;
+use Test::More tests => 11;
 use Test::Exception;
 use Encode;
 use FindBin;
@@ -12,7 +12,7 @@ SKIP: {
         # make sure cpan installers see this
         my $msg = "skipping - can't make connection without environment variables: APNS_TEST_DEVICETOKEN APNS_TEST_CERT, APNS_TEST_KEY and (if needed) APNS_TEST_KEY_PASSWD";
         diag $msg;
-        skip $msg, 6;
+        skip $msg, 10;
     }
 
     my %args = (
@@ -43,11 +43,47 @@ SKIP: {
                 },
             },
            );
-    } "queued single large utf8 notification";
+    } "queued single short utf8 notification";
 
     lives_ok { $apns->send_queue } "sent";
 
     sleep 5;
+    
+    lives_ok {
+        $apns->queue_notification(
+            $ENV{APNS_TEST_DEVICETOKEN},
+            {
+                aps => {
+                    alert => { body => "caf\xc3\xa9" },
+                    sound => 'default',
+                    badge => 1,
+                },
+            },
+           );
+    } "queued single short utf8 notification (alert.body)";
+
+    lives_ok { $apns->send_queue } "sent";
+
+    sleep 5;
+    
+    lives_ok {
+        $apns->queue_notification(
+            $ENV{APNS_TEST_DEVICETOKEN},
+            {
+                aps => {
+                    alert => {
+                        'loc-key'  => 'LOCALIZE_KEY',
+                        'loc-args' => [ "caf\xc3\xa9" ],
+                    },
+                    sound => 'default',
+                    badge => 1,
+                },
+            },
+           );
+    } "queued single short utf8 notification (alert.loc-args)";
+
+    lives_ok { $apns->send_queue } "sent";
+
     
     my $utf8_text = "";
     open my $utf8_text_fh, '<', $FindBin::Bin . '/utf8-Demosthenes.txt'
