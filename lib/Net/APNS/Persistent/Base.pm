@@ -112,7 +112,7 @@ sub _connection {
         connect( $socket, $self->_server_sockadder_in )
           or die "error connecting socket: $!";
 
-        $ctx = Net::SSLeay::CTX_new()
+        $ctx = Net::SSLeay::CTX_tlsv1_2_new()
           or die_now( "failed to create SSL_CTX: $!");
 
         Net::SSLeay::CTX_set_options( $ctx, &Net::SSLeay::OP_ALL );
